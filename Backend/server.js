@@ -1,4 +1,5 @@
 const sequelize = require('./util/database');
+require('dotenv').config();
 
 const express = require('express');
 const app = express();
@@ -38,7 +39,7 @@ sequelize
         console.log("error occured in synchronising", error);
     })
 
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 4000
 app.listen(PORT, () => {
     console.log("port is running successfully")
 })

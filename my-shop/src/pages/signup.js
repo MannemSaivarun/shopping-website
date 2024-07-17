@@ -19,7 +19,9 @@ export class Signup extends Component {
     handleSubmit=(event)=>{
         event.preventDefault();
         console.log(this.state.username, this.state.email,"role", this.state.role);
+        // console.log("this.props",this.props);
         const {username,email,password,role}=this.state;
+        console.log({username,email,password,role});
         this.props.signup({username,email,password,role});
 
     }
