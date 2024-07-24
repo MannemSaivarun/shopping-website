@@ -30,6 +30,7 @@ app.use('/user',UserRoutes);
 
 
 
+
 sequelize
     .sync()
     .then(() => {

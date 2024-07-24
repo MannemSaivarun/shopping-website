@@ -16,13 +16,19 @@ export class Signup extends Component {
     handleInputChange=(event)=>{
         this.setState({[event.target.name]:event.target.value})
     }
-    handleSubmit=(event)=>{
+    handleSubmit= async (event)=>{
         event.preventDefault();
         console.log(this.state.username, this.state.email,"role", this.state.role);
         // console.log("this.props",this.props);
         const {username,email,password,role}=this.state;
         console.log({username,email,password,role});
-        this.props.signup({username,email,password,role});
+        try {
+            await this.props.signup({username,email,password,role});
+            
+        } catch (error) {
+            console.log('An error occurred during signup');
+        }
+        
 
     }
     render() {
@@ -81,8 +87,13 @@ const mapStateToProps = (state)=>({
     error: state.signup.error
 })
 
-const mapDispatchToProps = ()=>({
-    signup
-})
+// const mapDispatchToProps = ()=>({
+//     signup
+// })
+
+const mapDispatchToProps = (dispatch) => ({
+    signup: (userData) => dispatch(signup(userData))
+});
+
 
 export default connect(mapStateToProps,mapDispatchToProps)(Signup)

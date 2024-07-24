@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+
 //signup action constants
 export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
 export const SIGNUP_FAILURE = 'SIGNUP_FAILURE';
@@ -21,16 +22,16 @@ export const SignupFailure = (error) => ({
     payload: error
 })
 
-export const signup = async (userData) => {
-    console.log(userData, 'in signup action');
-
-    // dispatch(SignupRequest());
+export const signup = (userData) => async (dispatch)=> {
+    console.log(userData, 'in signup action')
+    dispatch(SignupRequest());
 
     try {
+        console.log(userData, 'in signup action');
         await axios.post("http://localhost:4000/user/signup", userData)
             .then((response) => {
                 console.log(response.data);
-                // dispatch(SignupSuccess(response.data))
+                 dispatch(SignupSuccess(response.data))
             })
             .catch((error) => {
                 console.log("error occured during signup", error);
