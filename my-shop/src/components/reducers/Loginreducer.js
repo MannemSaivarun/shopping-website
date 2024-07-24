@@ -1,6 +1,8 @@
-import {LOGIN_REQUEST,LOGIN_FAILURE,LOGIN_SUCCESS} from '../actions/Loginaction';
+import {LOGIN_REQUEST,LOGIN_FAILURE,LOGIN_SUCCESS,LOGOUT} from '../actions/Loginaction';
 const InitialState = {
     loading:false,
+    isAuthenticated: false,
+    token: null,
     user:null,
     error:null
 }
@@ -14,15 +16,21 @@ export const LoginReducer = (state=InitialState, action)=>{
             }
         case LOGIN_SUCCESS:
             return {
-                ...state,
-                user:action.payload
+                loading: false,
+                isAuthenticated: true,
+                user: { id: action.payload.userId, role: action.payload.role },
+                token: action.payload.token,
+                error: null
             }
         case LOGIN_FAILURE:
             return{
                 ...state,
-                error:null
+                loading:false,
+                error:action.payload
             }
-    
+        case LOGOUT:
+            return InitialState;
+            
         default:
             return state;
     }

@@ -60,8 +60,8 @@ exports.signup = async (req, res, next) => {
 
 //login user
 
-function generateAcessToken(id,name){
-    return jwt.sign({userId : id, name : name },process.env.SECRET_TOKEN_KEY)
+function generateAcessToken(id,username,role){
+    return jwt.sign({userId : id, name : username, role:role },process.env.SECRET_TOKEN_KEY)
 }  
 
 exports.login = async (req, res, next) => {
@@ -78,7 +78,7 @@ exports.login = async (req, res, next) => {
             }
         })
         // const userId = user[0].id;
-        //console.log('user details',user);
+        console.log('user details',user);
 
         if (user.length > 0) {
             const storedHash = user[0].password
@@ -89,7 +89,7 @@ exports.login = async (req, res, next) => {
                     res.status(500).json({ success: false, message: "server error" })
                 } else if (result === true) {
                     // Passwords match, grant access to the user
-                    res.status(200).json({ success: true, message: "User loged in succefully", token: generateAcessToken(user[0].id, user[0].name, user[0].role) })
+                    res.status(200).json({ success: true, message: "User loged in succefully", token: generateAcessToken(user[0].id, user[0].username, user[0].role) })
                 } else {
                     // Passwords do not match, deny access
                     res.status(401).json({ success: false, message: "invalid parameters" })

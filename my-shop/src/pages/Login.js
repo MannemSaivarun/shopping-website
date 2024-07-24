@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { login } from '../components/actions/Loginaction';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import withNavigate from './LoginWrapper'
+import { Link,Navigate  } from 'react-router-dom';
+import withNavigate from '../components/wrappers/LoginWrapper'
 
 export class Login extends Component {
   constructor(props) {
@@ -26,7 +26,16 @@ export class Login extends Component {
 
   }
   render() {
-    const { loading, error } = this.props;
+    const { isAuthenticated, user, loading, error } = this.props;
+    // if (isAuthenticated) {
+    //   const userId = user.id;
+    //   if (user.role === 'admin') {
+    //     return <Navigate to={`/admin/${userId}`} replace />;
+    //   } else {
+    //     return <Navigate to={`/user/${userId}`} replace />;
+    //   }
+    // }
+
     return (
       <div className='login-container'>
         <Link to='/'><button>Back</button></Link>
@@ -69,7 +78,9 @@ export class Login extends Component {
 
 const mapStateToProps = (state) => ({
   loading: state.login.loading,
-  error: state.login.error
+  error: state.login.error,
+  isAuthenticated: state.login.isAuthenticated,
+  user: state.login.user
 })
 
 const mapDispatchToProps = (dispatch) => ({
